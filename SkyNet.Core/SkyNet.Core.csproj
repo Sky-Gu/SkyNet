@@ -31,6 +31,26 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Composition.AttributedModel, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.AttributedModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Composition.Convention, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.Convention.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Composition.Hosting, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.Hosting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Composition.Runtime, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Composition.TypedParts, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.TypedParts.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,23 +61,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Downloader\HttpDownLoader.cs" />
+    <Compile Include="Model\Site.cs" />
     <Compile Include="PageProcessor\DefaultPageProcessor.cs" />
-    <Compile Include="Scheduler\DefaultScheduler.cs" />
+    <Compile Include="Scheduler\MemoryScheduler.cs" />
     <Compile Include="Downloader\IDownLoader.cs" />
-    <Compile Include="Page.cs" />
+    <Compile Include="Model\Page.cs" />
     <Compile Include="PageProcessor\IPageProcessor.cs" />
-    <Compile Include="PageResult.cs" />
-    <Compile Include="SaveProcessor\ConsoleSaveProcessor.cs" />
-    <Compile Include="SaveProcessor\ISaveProcessor.cs" />
+    <Compile Include="Model\PageReuslt.cs" />
+    <Compile Include="Pipeline\ConsolePipeline.cs" />
+    <Compile Include="Pipeline\IPipeline.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Request.cs" />
+    <Compile Include="Model\Request.cs" />
     <Compile Include="Scheduler\IScheduler.cs" />
+    <Compile Include="Spider\ISpider.cs" />
+    <Compile Include="Spider\Spider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SkyNet.Tools\SkyNet.Tools.csproj">
       <Project>{F7CE2B00-1E5D-4D21-9439-BD09FC783C75}</Project>
       <Name>SkyNet.Tools</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
