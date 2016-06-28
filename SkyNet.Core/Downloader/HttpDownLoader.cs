@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
+using SkyNet.Core.Crawler;
 using SkyNet.Core.Model;
-using SkyNet.Core.Spider;
 
 namespace SkyNet.Core.Downloader
 {

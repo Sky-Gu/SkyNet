@@ -1,7 +1,7 @@
 ﻿using System;
 using SkyNet.Core.Model;
 
-namespace SkyNet.Core.Spider
+namespace SkyNet.Core.Crawler
 {
     /// <summary>
     ///     爬虫监听事件

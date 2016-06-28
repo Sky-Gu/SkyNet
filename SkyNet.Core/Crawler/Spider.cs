@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using CsQuery;
 using SkyNet.Core.Downloader;
 using SkyNet.Core.Enum;
 using SkyNet.Core.Exceptoin;
@@ -11,7 +13,7 @@ using SkyNet.Core.PageProcessor;
 using SkyNet.Core.Pipeline;
 using SkyNet.Core.Scheduler;
 
-namespace SkyNet.Core.Spider
+namespace SkyNet.Core.Crawler
 {
     public class Spider : ISpider
     {
@@ -85,7 +87,6 @@ namespace SkyNet.Core.Spider
         /// </summary>
         public void Run()
         {
-
             InitSpider();
             Status = SpiderStatusEnum.Running;
 
@@ -104,7 +105,9 @@ namespace SkyNet.Core.Spider
                             Status = SpiderStatusEnum.Finished;
                             break;
                         }
+
                         ProcessRequest(requset, DownLoader);
+
                         Thread.Sleep(_random.Next(Site.MinSleepTime, Site.MaxSleepTime));
                     }
                     catch (Exception e)
@@ -113,7 +116,6 @@ namespace SkyNet.Core.Spider
                     }
                 }
             });
-
         }
 
         #endregion
@@ -145,7 +147,7 @@ namespace SkyNet.Core.Spider
             if (page.IsSave)
                 Pipelines.ForEach(item => item.Process(page.PageResult));
 
-            //TODO 采集新的url 入队列
+            GetPageUrl(page).ForEach(item => Scheduler.AddRequest(new Request(item)));
         }
 
         #endregion
@@ -195,6 +197,24 @@ namespace SkyNet.Core.Spider
             {
                 throw new SpiderExceptoin("Spider is already running!");
             }
+        }
+
+        #endregion
+
+        #region GetPageUrl
+
+        /// <summary>
+        ///     获取页面中的Url
+        /// </summary>
+        /// <param name="page">爬取到的页面信息</param>
+        /// <returns>link 连接列表</returns>
+        public List<string> GetPageUrl(Page page)
+        {
+            CQ dom = page.Content;
+            var resultList = new List<string>();
+            dom["a"].Each(item => resultList.Add(item.GetAttribute("href")));
+
+            return resultList.Distinct().ToList();
         }
 
         #endregion

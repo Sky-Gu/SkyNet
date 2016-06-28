@@ -1,5 +1,5 @@
-﻿using SkyNet.Core.Model;
-using SkyNet.Core.Spider;
+﻿using SkyNet.Core.Crawler;
+using SkyNet.Core.Model;
 
 namespace SkyNet.Core.Downloader
 {

@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CsQuery, Version=1.3.3.249, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsQuery.1.3.4\lib\net40\CsQuery.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Composition.AttributedModel, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.AttributedModel.dll</HintPath>
@@ -76,9 +80,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\Request.cs" />
     <Compile Include="Scheduler\IScheduler.cs" />
-    <Compile Include="Spider\ISpider.cs" />
-    <Compile Include="Spider\ISpiderListening.cs" />
-    <Compile Include="Spider\Spider.cs" />
+    <Compile Include="Crawler\ISpider.cs" />
+    <Compile Include="Crawler\ISpiderListening.cs" />
+    <Compile Include="Crawler\Spider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SkyNet.Tools\SkyNet.Tools.csproj">

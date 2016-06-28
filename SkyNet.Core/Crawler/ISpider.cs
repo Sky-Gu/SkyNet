@@ -1,7 +1,7 @@
 ﻿using SkyNet.Core.Model;
 using SkyNet.Core.Scheduler;
 
-namespace SkyNet.Core.Spider
+namespace SkyNet.Core.Crawler
 {
     /// <summary>
     ///     爬虫约束
