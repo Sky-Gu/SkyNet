@@ -61,6 +61,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Downloader\HttpDownLoader.cs" />
+    <Compile Include="Enum\SpiderStatueEnum.cs" />
+    <Compile Include="Exceptoin\DownloadException.cs" />
+    <Compile Include="Exceptoin\SpiderExceptoin.cs" />
     <Compile Include="Model\Site.cs" />
     <Compile Include="PageProcessor\DefaultPageProcessor.cs" />
     <Compile Include="Scheduler\MemoryScheduler.cs" />
@@ -74,6 +77,7 @@
     <Compile Include="Model\Request.cs" />
     <Compile Include="Scheduler\IScheduler.cs" />
     <Compile Include="Spider\ISpider.cs" />
+    <Compile Include="Spider\ISpiderListening.cs" />
     <Compile Include="Spider\Spider.cs" />
   </ItemGroup>
   <ItemGroup>

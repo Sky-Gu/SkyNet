@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SkyNet.Core.Model
 {
@@ -10,7 +11,7 @@ namespace SkyNet.Core.Model
         /// <summary>
         ///     线程数
         /// </summary>
-        public int ThreadCount { get; set; } = 5;
+        public int ThreadCount { get; set; } = 1;
 
         /// <summary>
         ///     最大休眠时间

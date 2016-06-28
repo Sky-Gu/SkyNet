@@ -1,5 +1,4 @@
-﻿using System;
-using SkyNet.Core.Model;
+﻿using SkyNet.Core.Model;
 using SkyNet.Core.Scheduler;
 
 namespace SkyNet.Core.Spider
@@ -19,18 +18,15 @@ namespace SkyNet.Core.Spider
         /// </summary>
         Site Site { get; }
 
-        /// <summary>
-        ///     下载页面
-        /// </summary>
-        /// <param name="request">页面请求</param>
-        /// <returns>页面信息</returns>
-        Page Run(Request request);
 
         /// <summary>
-        ///     页面处理
+        ///     运行爬虫
         /// </summary>
-        /// <param name="page">页面信息</param>
-        /// <returns>页面抽取结果</returns>
-        PageReuslt PageProcesser(Page page);
+        void Run();
+
+        /// <summary>
+        ///     停止爬虫
+        /// </summary>
+        void Stop();
     }
 }
