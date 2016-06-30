@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace SkyNet.Core.Model
 {
@@ -8,7 +9,7 @@ namespace SkyNet.Core.Model
     public class PageReuslt
     {
         /// <summary>
-        /// 初始化PageResult
+        ///     初始化PageResult
         /// </summary>
         public PageReuslt()
         {
@@ -17,7 +18,7 @@ namespace SkyNet.Core.Model
         }
 
         /// <summary>
-        /// 初始化PageResult
+        ///     初始化PageResult
         /// </summary>
         /// <param name="isSave">是否需要被Pieline处理</param>
         public PageReuslt(bool isSave) : this()
@@ -28,17 +29,17 @@ namespace SkyNet.Core.Model
         /// <summary>
         ///     Pieline 抽取的字段
         /// </summary>
-        public Dictionary<string, object> ResultItem { get; }
+        public virtual Dictionary<string, object> ResultItem { get; }
 
         /// <summary>
         ///     请求信息
         /// </summary>
-        public Request Request { get; set; }
+        public virtual Request Request { get; set; }
 
         /// <summary>
         ///     是否需要被Pieline处理
         /// </summary>
-        public bool IsSave { get; set; }
+        public virtual bool IsSave { get; set; }
 
         #region AddOrUpdateResultIteme
 
@@ -61,5 +62,10 @@ namespace SkyNet.Core.Model
         }
 
         #endregion
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 }

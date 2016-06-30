@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace SkyNet.Core.Model
 {
@@ -30,31 +31,36 @@ namespace SkyNet.Core.Model
         /// <summary>
         ///     爬取深度
         /// </summary>
-        public int Depth { get; set; }
+        public virtual int Depth { get; set; }
 
         /// <summary>
         ///     请求的URI
         /// </summary>
-        public Uri Uri { get; set; }
+        public virtual Uri Uri { get; set; }
 
         /// <summary>
         ///     请求的优先级
         /// </summary>
-        public int Priority { get; set; }
+        public virtual int Priority { get; set; }
 
         /// <summary>
         ///     附加信息
         /// </summary>
-        public Dictionary<string, object> Addition { get; set; }
+        public virtual Dictionary<string, object> Addition { get; set; }
 
         /// <summary>
         ///     请求方式
         /// </summary>
-        public string Method { get; set; } = "GET";
+        public virtual string Method { get; set; } = "GET";
 
         /// <summary>
         ///     post请求时的数据
         /// </summary>
-        public string PostBody { get; set; }
+        public virtual string PostBody { get; set; }
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
+using CsQuery;
 using SkyNet.Core.Crawler;
 using SkyNet.Core.Model;
 
@@ -55,10 +56,13 @@ namespace SkyNet.Core.Downloader
                 Content = response.Content.ReadAsStringAsync().Result,
                 Url = request.Uri.ToString()
             };
+
+            CQ dom = result.Content;
+            result.Title = dom["title"].Text();
+
             foreach (var header in response.Headers)
-            {
                 result.Request.Addition.Add(header.Key, header.Value);
-            }
+
             return result;
         }
 

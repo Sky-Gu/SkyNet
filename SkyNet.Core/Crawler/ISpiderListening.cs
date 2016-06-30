@@ -11,12 +11,12 @@ namespace SkyNet.Core.Crawler
         /// <summary>
         ///     初始化完成后
         /// </summary>
-        void InitAfter(ISpider spider);
+        void AfterInit(ISpider spider);
 
         /// <summary>
         ///     爬取成功之后
         /// </summary>
-        void SuccessAfter(Request request);
+        void AfterSuccess(Request request);
 
         /// <summary>
         ///     错误处理

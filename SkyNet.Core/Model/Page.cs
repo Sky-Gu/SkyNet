@@ -18,27 +18,27 @@
         /// <summary>
         ///     请求状态码
         /// </summary>
-        public int StatusCode { get; set; }
+        public virtual int StatusCode { get; set; }
 
         /// <summary>
         ///     请求地址
         /// </summary>
-        public string Url { get; set; }
+        public virtual string Url { get; set; }
 
         /// <summary>
         ///     页面标题
         /// </summary>
-        public string Title { get; set; }
+        public virtual string Title { get; set; }
 
         /// <summary>
         ///     页面内容
         /// </summary>
-        public string Content { get; set; }
+        public virtual string Content { get; set; }
 
         /// <summary>
         ///     是否需要被Pieline处理
         /// </summary>
-        public bool IsSave
+        public virtual bool IsSave
         {
             get { return PageResult.IsSave; }
             set { PageResult.IsSave = value; }

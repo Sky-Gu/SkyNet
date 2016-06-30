@@ -15,7 +15,7 @@ using SkyNet.Core.Scheduler;
 
 namespace SkyNet.Core.Crawler
 {
-    public class Spider : ISpider
+    public sealed class Spider : ISpider
     {
         private readonly Random _random = new Random();
 
@@ -57,7 +57,7 @@ namespace SkyNet.Core.Crawler
         /// <summary>
         ///     爬虫状态
         /// </summary>
-        public SpiderStatusEnum Status { get; set; }
+        public SpiderStatusEnum Status { get; private set; }
 
         /// <summary>
         ///     爬虫线程数，通过Site进行设置
@@ -137,12 +137,12 @@ namespace SkyNet.Core.Crawler
         /// <summary>
         ///     页面下载
         /// </summary>
-        protected void ProcessRequest(Request request, IDownLoader downLoader)
+        private void ProcessRequest(Request request, IDownLoader downLoader)
         {
             var page = downLoader.DownLoader(request, this);
             PageProcessor.Process(page);
 
-            SpiderListening.ForEach(item => item.SuccessAfter(request));
+            SpiderListening.ForEach(item => item.AfterSuccess(request));
 
             if (page.IsSave)
                 Pipelines.ForEach(item => item.Process(page.PageResult));
@@ -158,7 +158,7 @@ namespace SkyNet.Core.Crawler
         ///     初始化爬虫
         /// </summary>
         /// <exception cref="ArgumentNullException">Scheduler is not null</exception>
-        protected void InitSpider()
+        private void InitSpider()
         {
             CheckRunning();
 
@@ -181,7 +181,7 @@ namespace SkyNet.Core.Crawler
             ServicePointManager.DefaultConnectionLimit = ThreadCount > 1024 ? ThreadCount : 1024;
 
 
-            SpiderListening.ForEach(item => item.InitAfter(this));
+            SpiderListening.ForEach(item => item.AfterInit(this));
         }
 
         #endregion
@@ -191,7 +191,7 @@ namespace SkyNet.Core.Crawler
         /// <summary>
         ///     验证是否正在运行
         /// </summary>
-        protected void CheckRunning()
+        private void CheckRunning()
         {
             if (Status == SpiderStatusEnum.Running)
             {
