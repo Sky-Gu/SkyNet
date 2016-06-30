@@ -18,7 +18,11 @@ namespace SkyNet.CoreTests.Pipeline
         public void ProcessTest_SuccessFilePath()
         {
             var pageRequestMock = MockFactory.GetPageResultMock();
-            var pipeLine = new FilePipeline(@"fileUnitTest.txt", @"D:\");
+            var pipeLine = new FilePipeline
+            {
+                FileName = "fileUnitTest.txt",
+                Directory = @"D:\"
+            };
 
             pipeLine.Process(pageRequestMock.Object);
         }

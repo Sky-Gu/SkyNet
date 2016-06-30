@@ -26,11 +26,11 @@ namespace SkyNet.Tools
 
             CreateDirectory(directory);
 
-            using (var fileStream = new FileStream(directory + fileName, FileMode.OpenOrCreate))
+            using (var fileStream = new FileStream(directory + fileName, FileMode.CreateNew))
             {
                 using (var sw = new StreamWriter(fileStream))
                 {
-                    sw.WriteLineAsync(fileContent);
+                    sw.WriteLine(fileContent);
                 }
             }
         }

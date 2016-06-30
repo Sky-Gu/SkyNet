@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Crawler\ConsoleSpiderListening.cs" />
     <Compile Include="Downloader\HttpDownLoader.cs" />
     <Compile Include="Enum\SpiderStatueEnum.cs" />
     <Compile Include="Exceptoin\DownloadException.cs" />

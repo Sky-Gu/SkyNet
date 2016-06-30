@@ -6,39 +6,31 @@ namespace SkyNet.Core.Pipeline
 {
     public class FilePipeline : IPipeline
     {
-        public FilePipeline()
-        {
-
-        }
-
-        public FilePipeline(string fileName, string directory)
-        {
-            FileName = fileName;
-            Directory = directory;
-        }
-
         /// <summary>
         ///     文件名称
         /// </summary>
-        public string FileName { get; }
+        public string FileName { get; set; } = Guid.NewGuid().ToString();
 
         /// <summary>
         ///     文件目录
         /// </summary>
-        public string Directory { get; }
+        public string Directory { get; set; } = @"D:\DownloaderPage\";
+
+        /// <summary>
+        ///     扩展名
+        /// </summary>
+        public string Extension { get; set; } = ".html";
+
+        /// <summary>
+        ///     获取完整的文件路径
+        /// </summary>
+        public string FullFilePath => Directory + FileName;
 
         public void Process(PageReuslt pageResult)
         {
-            const string extension = @".html";
-
-            var directoryPath = @"D:\DownloaderPage\";
-            var fileName = Guid.NewGuid() + extension;
-            if (!string.IsNullOrWhiteSpace(FileName))
-                fileName = FileName;
-            if (!string.IsNullOrWhiteSpace(Directory))
-                directoryPath = Directory;
-
-            new FileHelper().Create(directoryPath, fileName, pageResult.ToString());
+            var startTime = new DateTime(1970, 1, 1);
+            FileName = (DateTime.Now - startTime).TotalMilliseconds + Guid.NewGuid().ToString() + Extension;
+            new FileHelper().Create(Directory, FileName, pageResult.ToString());
         }
     }
 }

@@ -1,8 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Threading;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SkyNet.Core.Crawler;
 using SkyNet.Core.Enum;
 using SkyNet.Core.Model;
 using SkyNet.Core.PageProcessor;
+using SkyNet.Core.Pipeline;
 
 namespace SkyNet.CoreTests.Crawler
 {
@@ -16,6 +18,7 @@ namespace SkyNet.CoreTests.Crawler
             var spider = new Spider(site, new DefaultPageProcessor());
             var page = new Page(new Request())
             {
+                Url = "http://www.qq.com",
                 Content =
                     "<div><a href='www.qq.com'/><span><a href='www.qq.com'/></span><span><a href='www.1buo.com'/></span></div>"
             };
@@ -40,6 +43,20 @@ namespace SkyNet.CoreTests.Crawler
             Assert.IsTrue(spider.Status == SpiderStatusEnum.Init);
             Assert.IsTrue(spider.Pipelines != null);
             Assert.IsTrue(spider.SpiderListening != null);
+        }
+
+        [TestMethod]
+        public void RunTest_Success()
+        {
+            var site = new Site { ThreadCount = 10 };
+            var pageProcessor = new DefaultPageProcessor();
+            var pipeline = new FilePipeline();
+            var listening = new ConsoleSpiderListening();
+            var spider = new Spider(site, pageProcessor);
+            spider.AddSeedUrl("http://www.1buo.com/")
+                .AddPiepline(pipeline)
+                .AddListening(listening)
+                .Run();
         }
     }
 }

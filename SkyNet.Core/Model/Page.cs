@@ -1,4 +1,6 @@
-﻿namespace SkyNet.Core.Model
+﻿using System;
+
+namespace SkyNet.Core.Model
 {
     /// <summary>
     ///     页面信息
@@ -24,6 +26,11 @@
         ///     请求地址
         /// </summary>
         public virtual string Url { get; set; }
+
+        /// <summary>
+        ///     请求地址的Uri
+        /// </summary>
+        public Uri Uri => new Uri(Url);
 
         /// <summary>
         ///     页面标题

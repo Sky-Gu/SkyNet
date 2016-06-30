@@ -1,5 +1,4 @@
-﻿using System;
-using SkyNet.Core.Model;
+﻿using SkyNet.Core.Model;
 
 namespace SkyNet.Core.Scheduler
 {
@@ -11,7 +10,13 @@ namespace SkyNet.Core.Scheduler
         /// <summary>
         ///     添加一个url进入队列
         /// </summary>
-        void AddRequest(Request request);
+        void AddWaitRequest(Request request);
+
+        /// <summary>
+        ///     添加已完成的url进入完成队列
+        /// </summary>
+        /// <param name="request"></param>
+        void AddFinishRequest(Request request);
 
         /// <summary>
         ///     抽取一个Url给爬虫调用

@@ -12,6 +12,7 @@ using SkyNet.Core.Model;
 using SkyNet.Core.PageProcessor;
 using SkyNet.Core.Pipeline;
 using SkyNet.Core.Scheduler;
+using SkyNet.Tools;
 
 namespace SkyNet.Core.Crawler
 {
@@ -21,9 +22,9 @@ namespace SkyNet.Core.Crawler
 
         public Spider(Site site, IPageProcessor pageProcessor)
         {
-            Site = site;
             Status = SpiderStatusEnum.Init;
             PageProcessor = pageProcessor;
+            PageProcessor.Site = Site = site;
             Scheduler = new MemoryScheduler();
             DownLoader = new HttpDownLoader();
         }
@@ -52,7 +53,7 @@ namespace SkyNet.Core.Crawler
         /// <summary>
         ///     页面处理器集合
         /// </summary>
-        public List<IPipeline> Pipelines { get; set; } = new List<IPipeline>();
+        public List<IPipeline> Pipelines { get; } = new List<IPipeline>();
 
         /// <summary>
         ///     爬虫状态
@@ -101,10 +102,7 @@ namespace SkyNet.Core.Crawler
                     {
                         requset = Scheduler.GetRequest();
                         if (requset == null)
-                        {
-                            Status = SpiderStatusEnum.Finished;
                             break;
-                        }
 
                         ProcessRequest(requset, DownLoader);
 
@@ -132,6 +130,20 @@ namespace SkyNet.Core.Crawler
 
         #endregion
 
+        #region AddSeedUrl
+
+        /// <summary>
+        ///     增加种子url
+        /// </summary>
+        /// <param name="url">种子URL</param>
+        public Spider AddSeedUrl(string url)
+        {
+            Scheduler.AddWaitRequest(new Request(url));
+            return this;
+        }
+
+        #endregion
+
         #region ProcessRequest
 
         /// <summary>
@@ -140,14 +152,15 @@ namespace SkyNet.Core.Crawler
         private void ProcessRequest(Request request, IDownLoader downLoader)
         {
             var page = downLoader.DownLoader(request, this);
-            PageProcessor.Process(page);
 
+            PageProcessor.Process(page);
+            Scheduler.AddFinishRequest(request);
             SpiderListening.ForEach(item => item.AfterSuccess(request));
 
             if (page.IsSave)
                 Pipelines.ForEach(item => item.Process(page.PageResult));
 
-            GetPageUrl(page).ForEach(item => Scheduler.AddRequest(new Request(item)));
+            GetPageUrl(page).ForEach(item => Scheduler.AddWaitRequest(new Request(item)));
         }
 
         #endregion
@@ -214,7 +227,61 @@ namespace SkyNet.Core.Crawler
             var resultList = new List<string>();
             dom["a"].Each(item => resultList.Add(item.GetAttribute("href")));
 
-            return resultList.Distinct().ToList();
+            var domain = $"{page.Uri.Scheme}://{page.Uri.Host}";
+
+            var urlList = resultList
+                .Distinct()
+                .Select(item =>
+                {
+                    if (UrlHelper.IsUrl(item))
+                        return item;
+
+                    var canonicalizeUrl = UrlHelper.CanonicalizeUrl(item, domain);
+
+                    return UrlHelper.IsUrl(canonicalizeUrl) ? canonicalizeUrl : "";
+                }).Where(item => !string.IsNullOrWhiteSpace(item))
+                .Distinct()
+                .ToList();
+
+            return urlList;
+        }
+
+        #endregion
+
+        #region AddListening
+
+        /// <summary>
+        ///     添加监听事件
+        /// </summary>
+        /// <param name="listening">监听事件</param>
+        public Spider AddListening(ISpiderListening listening)
+        {
+            SpiderListening.Add(listening);
+            return this;
+        }
+
+        #endregion
+
+        #region AddPiepline
+
+        /// <summary>
+        ///     添加 Piepline
+        /// </summary>
+        /// <param name="piepline">结果处理对象</param>
+        public Spider AddPiepline(IPipeline piepline)
+        {
+            return AddPiepline(new List<IPipeline> { piepline });
+        }
+
+
+        /// <summary>
+        ///     添加 Piepline
+        /// </summary>
+        /// <param name="pieplines">结果处理对象集合</param>
+        public Spider AddPiepline(List<IPipeline> pieplines)
+        {
+            Pipelines.AddRange(pieplines);
+            return this;
         }
 
         #endregion

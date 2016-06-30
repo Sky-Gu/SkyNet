@@ -46,7 +46,7 @@ namespace SkyNet.Core.Model
         /// <summary>
         ///     附加信息
         /// </summary>
-        public virtual Dictionary<string, object> Addition { get; set; }
+        public virtual Dictionary<string, object> Addition { get; set; } = new Dictionary<string, object>();
 
         /// <summary>
         ///     请求方式
