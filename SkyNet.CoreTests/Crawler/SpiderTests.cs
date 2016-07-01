@@ -48,13 +48,15 @@ namespace SkyNet.CoreTests.Crawler
         [TestMethod]
         public void RunTest_Success()
         {
-            var site = new Site { ThreadCount = 10 };
+            var site = new Site { ThreadCount = 30 };
             var pageProcessor = new DefaultPageProcessor();
-            var pipeline = new FilePipeline();
+            var htmlPiepline = new HtmlFilePiepline();
+            var filePiepline = new FilePipeline();
             var listening = new ConsoleSpiderListening();
             var spider = new Spider(site, pageProcessor);
-            spider.AddSeedUrl("http://www.1buo.com/")
-                .AddPiepline(pipeline)
+            spider.AddSeedUrl("http://sh.lianjia.com/")
+                .AddPiepline(htmlPiepline)
+                .AddPiepline(filePiepline)
                 .AddListening(listening)
                 .Run();
         }

@@ -76,6 +76,7 @@
     <Compile Include="Model\Site.cs" />
     <Compile Include="PageProcessor\DefaultPageProcessor.cs" />
     <Compile Include="Pipeline\FilePipeline.cs" />
+    <Compile Include="Pipeline\HtmlFilePiepline.cs" />
     <Compile Include="Scheduler\MemoryScheduler.cs" />
     <Compile Include="Downloader\IDownLoader.cs" />
     <Compile Include="Model\Page.cs" />

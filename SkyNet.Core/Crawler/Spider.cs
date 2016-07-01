@@ -230,6 +230,7 @@ namespace SkyNet.Core.Crawler
             var domain = $"{page.Uri.Scheme}://{page.Uri.Host}";
 
             var urlList = resultList
+                .Where(item => !string.IsNullOrWhiteSpace(item))
                 .Distinct()
                 .Select(item =>
                 {

@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using SkyNet.Core.Model;
 using SkyNet.Tools;
 
 namespace SkyNet.Core.Pipeline
 {
-    public class FilePipeline : IPipeline
+    public class HtmlFilePiepline : IPipeline
     {
         /// <summary>
         ///     文件名称
@@ -14,12 +18,12 @@ namespace SkyNet.Core.Pipeline
         /// <summary>
         ///     文件目录
         /// </summary>
-        public string Directory { get; set; } = @"D:\Downloader\";
+        public string Directory { get; set; } = @"D:\DownloaderHtml\";
 
         /// <summary>
         ///     扩展名
         /// </summary>
-        public string Extension { get; set; } = ".txt";
+        public string Extension { get; set; } = ".html";
 
         /// <summary>
         ///     获取完整的文件路径
@@ -29,8 +33,8 @@ namespace SkyNet.Core.Pipeline
         public void Process(PageReuslt pageResult)
         {
             var startTime = new DateTime(1970, 1, 1);
-            FileName = (DateTime.Now - startTime).TotalMilliseconds + Guid.NewGuid().ToString() + Extension;
-            new FileHelper().Create(Directory, FileName, pageResult.ToString());
+            FileName = pageResult.ResultItem["title"].ToString() + (DateTime.Now - startTime).TotalMilliseconds + Extension;
+            new FileHelper().Create(Directory, FileName, pageResult.ResultItem["content"].ToString());
         }
     }
 }

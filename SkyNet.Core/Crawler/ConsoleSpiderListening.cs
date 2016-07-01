@@ -17,7 +17,7 @@ namespace SkyNet.Core.Crawler
 
         public void ErrorHandler(Request request, Exception e)
         {
-            Console.WriteLine("ErrorHandler");
+            Console.WriteLine(e.Message);
         }
     }
 }
